@@ -92,7 +92,11 @@ export function AddMoreInformation() {
       const response = await axios.post('http://localhost:4000/info/profile', processedValues);
       console.log("Success:", response.data);
       localStorage.setItem('user-data', JSON.stringify(response.data));
+      // localStorage.setItem('updateUserId', response.data._id);
+      const useres = response.data?._id
+      console.log('local-starage-id', useres);
       toast.success("Thank you for updating your profile!! Your profile has been recieved");
+      toast.success('Kindly refresh the page if you are getting an empty page, thank you!!');
       router.push('/home');
     } catch (error) {
       console.error("Error:", error);
@@ -118,7 +122,7 @@ export function AddMoreInformation() {
       <Card className="backdrop-blur-sm bg-white/20 dark:bg-gray-800/80 border border-white/30 dark:border-gray-700 rounded-xl shadow-lg p-6">
         <div className="mb-3">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Complete Your Profile</h2>
-          <p className="text-gray-600 dark:text-gray-300 mt-2">
+          <p className="text-gray-300 dark:text-gray-200 mt-2">
             Please fill in your personal information to complete your profile.
           </p>
         </div>

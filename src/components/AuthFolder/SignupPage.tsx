@@ -184,7 +184,7 @@ export function SignupPage() {
                 </Button>
               </form>
               <Link href='/login'>
-                <p className="text-center underline-offset-1">Already have an account! click to log in</p>
+                <p className="text-center text-xs underline-offset-1 lg:text-[16px]">Already have an account! click to log in</p>
               </Link>
             </Form>
           </Card>

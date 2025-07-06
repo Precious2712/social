@@ -10,12 +10,11 @@ import { login } from "@/data/authFields/login-auth";
 import { AnimatedFormField } from "./AnimatedFormField";
 import loginAnimation from '@/data/lotties/Animation - 1750065321286.json';
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-// Dynamically import Lottie with no SSR
 const LottieAnimation = dynamic(
     () => import('lottie-react'),
     { ssr: false }

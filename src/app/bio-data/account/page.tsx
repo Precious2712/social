@@ -17,7 +17,7 @@ export default function UserAccountPage() {
 
     if (!data) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
+            <div className="flex items-center justify-center min-h-screen bg-black">
                 <div className="text-center">
                     <h2 className="text-2xl font-bold text-gray-800">Profile not found</h2>
                     <p className="text-gray-600">Unable to load user profile</p>
@@ -31,8 +31,6 @@ export default function UserAccountPage() {
             <Nav/>
             <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 py-32 px-4 sm:px-6 lg:px-8 mt-">
                 <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
-                    {/* Profile Header with Image Upload */}
-                    {/* <h1 className="text-6xl">hi</h1> */}
                     <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white relative">
                         <div className="flex items-center space-x-4">
                             <div className="flex-shrink-0 relative group">
@@ -78,10 +76,8 @@ export default function UserAccountPage() {
                         </div>
                     </div>
 
-                    {/* Profile Content */}
                     <div className="p-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {/* Basic Info */}
                             <div className="bg-gray-50 p-4 rounded-lg">
                                 <h2 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Basic Information</h2>
                                 <div className="space-y-3">
@@ -92,7 +88,6 @@ export default function UserAccountPage() {
                                 </div>
                             </div>
 
-                            {/* Personal Details */}
                             <div className="bg-gray-50 p-4 rounded-lg">
                                 <h2 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Personal Details</h2>
                                 <div className="space-y-3">
@@ -111,7 +106,6 @@ export default function UserAccountPage() {
                                 </div>
                             </div>
 
-                            {/* About Section */}
                             <div className="md:col-span-2 bg-gray-50 p-4 rounded-lg">
                                 <h2 className="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">About</h2>
                                 <p className="text-gray-700">
@@ -120,11 +114,10 @@ export default function UserAccountPage() {
                             </div>
                         </div>
 
-                        {/* Full-width Delete Button */}
                         <div className="mt-6 w-full">
                             <Button
                                 variant="destructive"
-                                className="w-full py-6 text-lg bg-gradient-to-r from-blue-500 to-indigo-600"
+                                className="w-full py-6 text-lg bg-gradient-to-r from-blue-500 to-indigo-600 cursor-pointer"
                                 onClick={handleDeleteAccount}
                             >
                                 Delete Account

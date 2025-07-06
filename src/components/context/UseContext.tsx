@@ -18,7 +18,8 @@ type AppContextType = {
     profileImage: string | null;
     uploading: boolean;
     loading: boolean;
-    request: sender | null; 
+    request: sender | null;
+    setRequest: React.Dispatch<React.SetStateAction<sender | null>>;
     check: userField | null;
     triggerFileInput: () => void;
     senderHandleRequest: (id: string) => Promise<sender | undefined>;
@@ -74,13 +75,19 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     };
 
     const handleDeleteAccount = async () => {
-        if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+        if (toast.success("Are you sure you want to delete your account? This action cannot be undone.")) {
             try {
                 const id = localStorage.getItem('_id');
                 await axios.delete(`http://localhost:4000/info/deleteUser/${id}`);
-                window.location.href = '/';
+                toast.success('Account deleted successfully!!');
+                window.location.href = '/bio-data';
             } catch (error) {
                 console.error("Error deleting account:", error);
+                if (axios.isAxiosError(error)) {
+                    const errorMessage = error.response?.data?.message || 'Missing user-data '
+                    console.log("axios", errorMessage);
+                    toast.error(`${errorMessage}`);
+                }
                 alert("Failed to delete account. Please try again.");
             }
         }
@@ -94,6 +101,11 @@ export const AppProvider = ({ children }: AppProviderProps) => {
             setData(profile);
         } catch (error) {
             console.log(error);
+            if (axios.isAxiosError(error)) {
+                const errorMessage = error.response?.data?.message || 'Missing user-data '
+                console.log("axios", errorMessage);
+                toast.error(`${errorMessage}`);
+            }
         } finally {
             setLoading(false);
         }
@@ -118,7 +130,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
             });
 
             setCheck(user.data.data);
-            console.log("user-data", user.data.data);
+            // console.log("user-data", user.data.data);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const errorMessage = error.response?.data?.message;
@@ -129,6 +141,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
                     localStorage.removeItem('username');
                     localStorage.removeItem('_id');
                     localStorage.removeItem('user-data');
+                    localStorage.removeItem('imageUrl');
                     toast.error('Token expired. Please login again');
                     router.push('/');
                 } else if (error.response?.status === 401) {
@@ -166,52 +179,54 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
     const sendFriendRequest = async (id: string) => {
         const userDataRaw = localStorage.getItem('user-data');
-        // const recipient = localStorage.getItem('recieverId');
+        const _id = localStorage.getItem('_id');
         const token = localStorage.getItem('token');
 
-        if (!userDataRaw || !id) {
-            console.warn('Missing user-data or recieverId in localStorage');
+        if (!_id || !id) {
+            toast.error('Missing user-data or recieverId in localStorage');
             return;
         }
 
-        const send = JSON.parse(userDataRaw);
+        let profile;
+        try {
+            const userCrendentials = await axios.get(`http://localhost:4000/info/getUserProfile/${_id}`);
+            profile = userCrendentials.data?.bioProfile;
+        } catch (error) {
+            toast.error('Error fetching user profile');
+            console.error('Error:', error);
+            return;
+        }
 
-        const profileInfo = send?.data?.profileInfo?.[0] || {};
-        const aboutInfo = send?.data?.about?.[0] || {};
-        const hobbyInfo = send?.data?.hobby?.[0] || {};
-        const profileMain = send?.data?.profileInfo?.[0] || {};
 
         const obj = {
-            userFirstName: send?.data?.firstname || '',
-            userLastName: send?.data?.lastname || '',
-            nickName: send?.data?.username || '',
+            userFirstName: profile?.firstname,
+            userLastName: profile?.lastname,
+            nickName: profile?.username,
             about: [
                 {
-                    profile: aboutInfo.aboutYourself || '',
-                    status: aboutInfo.maritalStatus || '',
-                    religion: aboutInfo.religion || ''
+                    profile: profile?.about[0].aboutYourself,
+                    status: profile?.about[0].maritalStatus,
+                    religion: profile?.about[0].religion
                 }
             ],
             hobbies: [
                 {
-                    one: hobbyInfo.one || '',
-                    two: hobbyInfo.two || '',
-                    three: hobbyInfo.three || ''
+                    one: profile?.hobby[0].one,
+                    two: profile?.hobby[0].two,
+                    three: profile?.hobby[0].three
                 }
             ],
             profile: [
                 {
-                    gender: profileInfo.gender || '',
-                    country: profileInfo.country || '',
-                    occupation: profileMain.occupation || '',
-                    age: profileInfo.age || ''
+                    gender: profile?.profileInfo[0].gender,
+                    country: profile?.profileInfo[0].country,
+                    occupation: profile?.profileInfo[0].occupation,
+                    age: profile?.profileInfo[0].age
                 }
             ],
             reciever: id,
             approval: false
-        };
-
-        console.log("schema-obj", obj);
+        }
 
         try {
             const friendReq = await axios.post(`http://localhost:4000/friend/sendRequest`, obj, {
@@ -226,7 +241,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
             if (axios.isAxiosError(error)) {
                 const errorMessage = error.response?.data?.message || 'Missing user-data or recieverId in localStorage'
                 console.log("axios", errorMessage);
-                toast.error(`${errorMessage}`)
+                toast.error(`${errorMessage}`);
             }
         }
     };
@@ -235,7 +250,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         try {
             const api = await axios.get(`http://localhost:4000/friend/seeSendRequet/${id}`);
             setRequest(api.data.client);
-            console.log(api.data.client);
+            // console.log(api.data.client);
             return api.data.client;
         } catch (error) {
             console.log(error);
@@ -266,7 +281,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
                 sendFriendRequest,
                 senderHandleRequest,
                 request,
-                check
+                check,
+                setRequest
             }}
         >
             {children}

@@ -3,11 +3,11 @@ import { z } from 'zod';
 export const personalData = z.object({
     firstname: z.string()
         .min(8, 'minimum length is 8')
-        .max(12, 'maximum length is 12'),
+        .max(14, 'maximum length is 14'),
 
     lastname: z.string()
         .min(8, 'minimum length is 8')
-        .max(12, 'maximum length is 12'),
+        .max(14, 'maximum length is 14'),
 
     profileInfo: z.array(z.object({
         gender: z.string(),

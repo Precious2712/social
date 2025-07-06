@@ -18,6 +18,7 @@ export function Nav() {
         localStorage.removeItem('username');
         localStorage.removeItem('_id');
         localStorage.removeItem('user-data');
+        localStorage.removeItem('imageUrl');
         toast.success(`${check?.username} have logout`);
         router.push('/')
     }
@@ -27,16 +28,17 @@ export function Nav() {
     }
 
     return (
-        <div className=" fixed w-full z-50 text-white bg-black py-2 px-1">
+        <div className=" fixed w-full z-50 text-white bg-black py-3.5 px-1">
             <nav className="flex items-center justify-between">
                 <div className="hidden lg:flex gap-3 ml-5">
                     <p>Hi {check?.username}</p>
                     <ul className="flex space-x-6">
                         {[
                             { list: 'home', path: '/home', id: 1 },
-                            { list: 'bio-data', path: '/bio-dat', id: 2 },
+                            { list: 'bio-data', path: '/bio-data', id: 2 },
                             { list: 'account', path: '/bio-data/account', id: 3 },
-                            { list: 'request', path: '/request', id: 4 }
+                            { list: 'request', path: '/request', id: 4 },
+                            { list: 'update-profile', path: '/update-profile', id: 5 }
                         ].map((el) => (
                             <li key={el.id}>
                                 <Link href={el.path} className="hover:underline">
@@ -66,12 +68,13 @@ export function Nav() {
 
             {show && (
                 <motion.nav className={`fixed z-50 top-13 left-0 w-[100%] py-6 bg-blue-700 text-white transition-all duration-500 ease-in-out md:hidden lg:hidden ${show ? "translate-x-0" : "-translate-x-full"}`}>
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-4">
                         {[
                             { list: 'home', path: '/home', id: 1 },
-                            { list: 'bio-data', path: '/bio-dat', id: 2 },
+                            { list: 'bio-data', path: '/bio-data', id: 2 },
                             { list: 'account', path: '/bio-data/account', id: 3 },
-                            { list: 'request', path: '/request', id: 4 }
+                            { list: 'request', path: '/request', id: 4 },
+                            { list: 'update-profile', path: '/update-profile', id: 5 }
                         ].map((item, index) => (
                             <Link href={item.path} key={item.list}>
                                 <motion.div
@@ -92,14 +95,18 @@ export function Nav() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.3, duration: 0.5 }}
                     >
-                        <Button onClick={handleLogOut} variant="ghost" className="text-slate-300 hover:text-white cursor-pointer">
-                            Logout
-                        </Button>
-                        <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.95 }}>
+                        <div className="flex justify-center mt-3.5">
+                            <Button onClick={handleLogOut} variant="ghost" className="text-slate-300 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:text-white cursor-pointer w-[90%]">
+                                Logout
+                            </Button>
+                        </div>
+                        <motion.div className="" whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.95 }}>
                             <Link href='/'>
-                                <Button className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white cursor-pointer w-[90%]">
-                                    sign up
-                                </Button>
+                                <div className="flex justify-center mt-7">
+                                    <Button className="bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white cursor-pointer w-[90%]">
+                                        sign up
+                                    </Button>
+                                </div>
                             </Link>
                         </motion.div>
 

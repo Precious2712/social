@@ -8,7 +8,7 @@ import {
     FormLabel,
     FormMessage
 } from "@/components/ui/form";
-import { Control, FieldValues } from "react-hook-form";
+import { Control } from "react-hook-form";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { userSignup } from "../AuthFolder/AuthSchema";
