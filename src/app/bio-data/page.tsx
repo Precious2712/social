@@ -2,7 +2,6 @@
 
 import { AddMoreInformation } from "@/components/AddBioData/AddMoreInformation";
 import { Nav } from "@/components/NavBar/Nav";
-import { Button } from "@/components/ui/button";
 
 
 export default function AddMoreBioDataInfo() {

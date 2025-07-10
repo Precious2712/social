@@ -1,7 +1,6 @@
 'use client';
 
 import { useAppContext } from "@/components/context/UseContext";
-import { useState } from "react";
 import { cardVariants, GetInitials } from "@/components/AddBioData/AnimationPropsComp";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,12 +11,12 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export default function FriendRequestPage() {
-  const [approval, setApproval] = useState(false);
   const { request, check, setRequest } = useAppContext();
 
   async function handleDeleteReq(id: string) {
     try {
       const res = await axios.delete(`https://reqflow.onrender.com/friend/rejectRequest/${id}`);
+      console.log(res);
       toast.success('Friend request deleted successfully');
 
       setRequest(prev => {

@@ -54,18 +54,18 @@ export function AddMoreInformation() {
 
   async function onSubmit(values: userBioInfo) {
     const _id = localStorage.getItem('_id');
-    const name = localStorage.getItem('username'); 
+    const name = localStorage.getItem('username');
 
     console.log(_id);
     console.log(name);
-    
+
     if (!_id || !name) {
       toast.error("User session data missing. Please log in again.");
       return;
     }
 
     const processedValues = {
-      id: _id, 
+      id: _id,
       username: name,
       firstname: values.firstname,
       lastname: values.lastname,
@@ -105,20 +105,15 @@ export function AddMoreInformation() {
 
       let errorMessage = "Failed to save profile";
       if (axios.isAxiosError(error)) {
-        if (error.response?.data?.errors) {
-          errorMessage = Object.values(error.response.data.errors)
-            .map((err: any) => err.message)
-            .join(", ");
-        } else {
-          errorMessage = error.response?.data?.message || errorMessage;
-        }
+        errorMessage = error.response?.data?.message || errorMessage;
+        console.log("axios", errorMessage);
       }
       toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
   }
-  
+
   return (
     <div className="w-[90%] lg:max-w-2xl mx-auto p-4">
       <Card className="backdrop-blur-sm bg-white/20 dark:bg-gray-800/80 border border-white/30 dark:border-gray-700 rounded-xl shadow-lg p-6">

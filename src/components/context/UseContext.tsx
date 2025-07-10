@@ -2,7 +2,7 @@
 
 import { portfolio } from '@/data/authFields/data-types';
 import axios from 'axios';
-import { createContext, useContext, useState, ReactNode, useEffect, useRef } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect, useRef, useCallback } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { User } from '@/data/authFields/user';
@@ -63,7 +63,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
             const image = new FormData();
             image.append('image', file);
 
-            let response = await axios.put(`https://reqflow.onrender.com/auth/upload/${id}`, image);
+            const response = await axios.put(`https://reqflow.onrender.com/auth/upload/${id}`, image);
             localStorage.setItem('imageUrl', response.data.imageUrl);
             console.log('response', response);
         } catch (error) {
@@ -119,51 +119,38 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         fileInputRef.current?.click();
     };
 
-    const currentUser = async () => {
+    const currentUser = useCallback(async () => {
         const token = localStorage.getItem('token');
-        
         if (!token) {
             router.push('/');
+            return;
         }
 
         try {
             const user = await axios.get("https://reqflow.onrender.com/auth/checkCurrentUser", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             setCheck(user.data.data);
-            // console.log("user-data", user.data.data);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 const errorMessage = error.response?.data?.message;
-                console.log("axios", errorMessage);
-
-                if (errorMessage) {
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('username');
-                    localStorage.removeItem('_id');
-                    localStorage.removeItem('user-data');
-                    localStorage.removeItem('imageUrl');
-                    toast.error('Token expired. Please login again');
-                    router.push('/');
-                } else if (error.response?.status === 401) {
-                    localStorage.removeItem('token');
+                if (errorMessage || error.response?.status === 401) {
+                    localStorage.clear();
                     toast.error('Session expired. Please login again');
                     router.push('/');
                 } else {
-                    console.log('Unknown Axios error', error);
+                    console.error('Unknown Axios error', error);
                 }
             } else {
-                console.log('Non-Axios error', error);
+                console.error('Non-Axios error', error);
             }
         }
-    };
+    }, [router]);
 
     useEffect(() => {
         currentUser();
-    }, []);
+    }, [currentUser]);
 
     const checkSearchField = async (firstname: string): Promise<User[]> => {
         try {
@@ -183,6 +170,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
     const sendFriendRequest = async (id: string) => {
         const userDataRaw = localStorage.getItem('user-data');
+        console.log(userDataRaw);
+
         const _id = localStorage.getItem('_id');
         const token = localStorage.getItem('token');
 
