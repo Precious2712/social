@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { InfoItem } from "@/components/AuthFolder/InfoIem";
 import { useAppContext } from "@/components/context/UseContext";
 import { Nav } from "@/components/NavBar/Nav";
+import toast from "react-hot-toast";
 
 export default function UserAccountPage() {
     const { data, handleImageUpload, handleDeleteAccount, profileImage, triggerFileInput, fileInputRef, uploading, loading } = useAppContext();
@@ -25,6 +26,8 @@ export default function UserAccountPage() {
             </div>
         );
     }
+
+    toast.success('Kindly refresh page if you have updated your profile for your profile to appear');
 
     return (
         <div>

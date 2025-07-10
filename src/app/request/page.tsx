@@ -17,7 +17,7 @@ export default function FriendRequestPage() {
 
   async function handleDeleteReq(id: string) {
     try {
-      const res = await axios.delete(`http://localhost:4000/friend/rejectRequest/${id}`);
+      const res = await axios.delete(`https://reqflow.onrender.com/friend/rejectRequest/${id}`);
       toast.success('Friend request deleted successfully');
 
       setRequest(prev => {
@@ -35,7 +35,7 @@ export default function FriendRequestPage() {
 
   async function handlePutReq(id: string) {
     try {
-      const update = await axios.put(`http://localhost:4000/friend/updateApprovalRequest/${id}`, {
+      const update = await axios.put(`https://reqflow.onrender.com/friend/updateApprovalRequest/${id}`, {
         approval: true,
       });
       console.log(update);

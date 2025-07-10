@@ -63,7 +63,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
             const image = new FormData();
             image.append('image', file);
 
-            let response = await axios.put(`http://localhost:4000/auth/upload/${id}`, image);
+            let response = await axios.put(`https://reqflow.onrender.com/auth/upload/${id}`, image);
             localStorage.setItem('imageUrl', response.data.imageUrl);
             console.log('response', response);
         } catch (error) {
@@ -78,7 +78,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         if (toast.success("Are you sure you want to delete your account? This action cannot be undone.")) {
             try {
                 const id = localStorage.getItem('_id');
-                await axios.delete(`http://localhost:4000/info/deleteUser/${id}`);
+                await axios.delete(`https://reqflow.onrender.com/info/deleteUser/${id}`);
                 toast.success('Account deleted successfully!!');
                 window.location.href = '/bio-data';
             } catch (error) {
@@ -96,7 +96,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     const userData = async () => {
         const id = localStorage.getItem('_id');
         try {
-            const userCrendentials = await axios.get(`http://localhost:4000/info/getUserProfile/${id}`);
+            const userCrendentials = await axios.get(`https://reqflow.onrender.com/info/getUserProfile/${id}`);
             const profile = userCrendentials.data.bioProfile;
             setData(profile);
         } catch (error) {
@@ -121,9 +121,13 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
     const currentUser = async () => {
         const token = localStorage.getItem('token');
+        
+        if (!token) {
+            router.push('/');
+        }
 
         try {
-            const user = await axios.get("http://localhost:4000/auth/checkCurrentUser", {
+            const user = await axios.get("https://reqflow.onrender.com/auth/checkCurrentUser", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -165,7 +169,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         try {
             const token = localStorage.getItem('token');
 
-            const res = await axios.get(`http://localhost:4000/info/search-field?firstname=${firstname}`, {
+            const res = await axios.get(`https://reqflow.onrender.com/info/search-field?firstname=${firstname}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -189,7 +193,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
         let profile;
         try {
-            const userCrendentials = await axios.get(`http://localhost:4000/info/getUserProfile/${_id}`);
+            const userCrendentials = await axios.get(`https://reqflow.onrender.com/info/getUserProfile/${_id}`);
             profile = userCrendentials.data?.bioProfile;
         } catch (error) {
             toast.error('Error fetching user profile');
@@ -229,7 +233,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         }
 
         try {
-            const friendReq = await axios.post(`http://localhost:4000/friend/sendRequest`, obj, {
+            const friendReq = await axios.post(`https://reqflow.onrender.com/friend/sendRequest`, obj, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -248,7 +252,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
     const senderHandleRequest = async (id: string) => {
         try {
-            const api = await axios.get(`http://localhost:4000/friend/seeSendRequet/${id}`);
+            const api = await axios.get(`https://reqflow.onrender.com/friend/seeSendRequet/${id}`);
             setRequest(api.data.client);
             // console.log(api.data.client);
             return api.data.client;

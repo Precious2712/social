@@ -31,7 +31,7 @@ export function SignupPage() {
     console.log(values);
     setIsLoading(true);
     try {
-      const signIn = await axios.post('http://localhost:4000/auth/signUp', values);
+      const signIn = await axios.post('https://reqflow.onrender.com/auth/signUp', values);
       console.log('values', signIn);
       setTimeout(() => {
         toast.success('congratulations you have successfully register your account');

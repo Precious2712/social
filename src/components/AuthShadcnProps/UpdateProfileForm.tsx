@@ -55,7 +55,8 @@ export default function ProfileUpdateForm() {
       const id = localStorage.getItem('_id');
 
       const response = await axios.put(
-        `http://localhost:4000/info/update-info/${id}`,
+        `https://reqflow.onrender.com
+        /info/update-info/${id}`,
         formData,
         {
           headers: {

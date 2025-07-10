@@ -118,7 +118,7 @@ export function SendRequest() {
                             <Button
                                 onClick={() => handleSearch(firstname)}
                                 disabled={!firstname.trim() || isLoading}
-                                className="m-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+                                className="m-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 cursor-pointer"
                             >
                                 {isLoading ? "Searching..." : "Search"}
                             </Button>

@@ -20,6 +20,8 @@ export function AddMoreInformation() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
+  toast.success('Kindly refresh the page so your username and account will appear!!');
+
   const form = useForm<userBioInfo>({
     resolver: zodResolver(personalData),
     defaultValues: {
@@ -89,7 +91,7 @@ export function AddMoreInformation() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:4000/info/profile', processedValues);
+      const response = await axios.post('https://reqflow.onrender.com/info/profile', processedValues);
       console.log("Success:", response.data);
       localStorage.setItem('user-data', JSON.stringify(response.data));
       // localStorage.setItem('updateUserId', response.data._id);
