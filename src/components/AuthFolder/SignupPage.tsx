@@ -158,12 +158,12 @@ export function SignupPage() {
 
         <div className="w-full lg:w-1/2">
           <Card className="backdrop-blur-xl bg-white/10 border-white/20 shadow-2xl p-6">
-            <h1 className="text-center text-2xl">Fill in the details</h1>
+            <h1 className="text-center text-2xl font-bold">Fill in the details</h1>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <SignupShadcn
                   name="username"
-                  label="username"
+                  label="User-name"
                   type="username"
                   required={true}
                   placeholder="Enter user name"
@@ -172,7 +172,7 @@ export function SignupPage() {
 
                 <SignupShadcn
                   name="password"
-                  label="password"
+                  label="Password"
                   type="password"
                   required={true}
                   placeholder="Enter user name"

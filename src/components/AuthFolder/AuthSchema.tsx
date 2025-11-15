@@ -1,13 +1,9 @@
 import { z } from "zod";
 
 export const signUpFormSchema = z.object({
-    username: z.string().
-        min(6, 'minimum is six').
-        max(9, 'maximum is nine'),
+    username: z.string(),
 
-    password: z.string().
-        min(7, 'minimum is eight').
-        max(8, 'maximum is exight')
+    password: z.string()
 })
 
 export const loginFormSchema = z.object({

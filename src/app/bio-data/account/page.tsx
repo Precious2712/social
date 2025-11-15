@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { InfoItem } from "@/components/AuthFolder/InfoIem";
 import { useAppContext } from "@/components/context/UseContext";
 import { Nav } from "@/components/NavBar/Nav";
-import toast from "react-hot-toast";
 
 export default function UserAccountPage() {
     const { data, handleImageUpload, handleDeleteAccount, profileImage, triggerFileInput, fileInputRef, uploading, loading } = useAppContext();
@@ -22,12 +21,13 @@ export default function UserAccountPage() {
                 <div className="text-center">
                     <h2 className="text-2xl font-bold text-gray-800">Profile not found</h2>
                     <p className="text-gray-600">Unable to load user profile</p>
+                    <p className="text-gray-600">Kindly create a profile to see your profile</p>
                 </div>
             </div>
         );
     }
 
-    toast.success('Kindly refresh page if you have updated your profile for your profile to appear');
+    // toast.success('Kindly refresh page if you have updated your profile for your profile to appear');
 
     return (
         <div>

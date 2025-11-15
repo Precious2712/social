@@ -20,7 +20,7 @@ export function AddMoreInformation() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  toast.success('Kindly refresh the page so your username and account will appear!!');
+  // toast.success('Kindly refresh the page so your username and account will appear!!');
 
   const form = useForm<userBioInfo>({
     resolver: zodResolver(personalData),
