@@ -9,7 +9,7 @@ export default function AddMoreBioDataInfo() {
         <div>
             <Nav/>
   
-            <div className="bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white py-22">
+            <div className="bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white py-22 min-h-screen">
                 <div className="mt-5">
                     <AddMoreInformation />
                 </div>

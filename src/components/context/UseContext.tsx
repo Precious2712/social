@@ -161,6 +161,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
                     Authorization: `Bearer ${token}`,
                 },
             });
+            console.log(res);
+            
             return res.data.search;
         } catch (error) {
             console.error("Error fetching search data:", error);

@@ -30,10 +30,10 @@ export default function UserAccountPage() {
     // toast.success('Kindly refresh page if you have updated your profile for your profile to appear');
 
     return (
-        <div>
+        <div className="min-h-screen  bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 ">
             <Nav/>
-            <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 py-32 px-4 sm:px-6 lg:px-8 mt-">
-                <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+            <div className="flex justify-center items-center min-h-screen px-4 sm:px-6 lg:px-8 py-20">
+                <div className=" w-full bg-white rounded-xl shadow-md md:w-[550px] lg:w-[800px]">
                     <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white relative">
                         <div className="flex items-center space-x-4">
                             <div className="flex-shrink-0 relative group">
